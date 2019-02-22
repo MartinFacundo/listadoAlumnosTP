@@ -22,14 +22,25 @@ void cargarArchivoAlumnos(char nombreArchivo[]);
 void mostrarArchivoAlumnos(char nombreArchivo[]);
 int pasarArchivoToArregloConFiltro(char nombreArchivo[], alumno A[], int dimension, char carrera[]);
 int pasarArregloToArchivo(char nombreArchivo[], alumno A[], int validos);
-void menu();
+
+void menu(){
+
+    puts("1-Cargar alumnos");
+    puts("2-Mostrar alumno");
+    puts("3-Buscar alumno");
+    puts("4-Cargar archivo de alumnos");
+    puts("5-Mostrar archivo de alumnos");
+    puts("6-Pasar archivo a arreglo con filtro");
+    puts("7-Pasar arreglo a archivo");
+    puts("");
+}
 
 int main()
 {
     alumno listado[20];
     //int validos=0;
     char archivoAlumnos[]={"archivoAlumnos.bin"};
-
+    char letra;
     /*validos=cargarArregloAlumnos(listado,20);
 
     system("pause");
@@ -43,7 +54,45 @@ int main()
     system("cls");
 
     mostrarArchivoAlumnos(archivoAlumnos);
+    puts("A continuacion le va a aparecer el menu");
+    letra='n';
+        while (letra!='s'){
+        menu();
+        printf ("Ingrese la opcion que desea usar: ");
+        scanf("%d",&op);
+        switch (op)
+        {
+        case 1:
+            validos=CargarArregloAlumnos(Array,20);
+            break;
+        case 2:
+            MostrarArregloAlumnos(Array,validos);
+            break;
+        case 3:
+            buscarUnAlumno(Array,validos,valor);
+            break;
+        case 4:
+            cargarArchivoAlumnos(nombreArchivo[20]);
+            break;
+        case 5:
+             mostrarArchivoAlumnos(nombreArchivo[20]);
+            break;
+        case 6:
 
+            break;
+        case 7:
+
+            break;
+        default:
+            printf("Opcion incorrecta.\n");
+            break;
+        }
+        system("pause");
+    puts("");
+    printf ("¿Desea hacer otra funcion? Ingrese ENTER o ingrese (s) para salir.\n");
+    scanf ("%c",&letra);
+    system("cls");
+    }
     return 0;
 }
 
