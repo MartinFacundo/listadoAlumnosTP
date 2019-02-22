@@ -1,0 +1,130 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct
+{
+    int dni;
+    int legajo;
+    char nombres[30];
+    char apellidos[30];
+    char genero;
+    char carrera[30];
+} alumno;
+
+int cargarArregloAlumnos(alumno A[],int dimension);
+void mostrarUnAlumno(alumno aux);
+void mostrarArregloAlumnos(alumno A[],int validos);
+
+//void abrirArchivo(char nombreArchivo[30],char modo[3]);
+
+void buscarUnAlumno(alumno A[], int validos, int legajo);
+void cargarArchivoAlumnos(char nombreArchivo[]);
+void mostrarArchivoAlumnos(char nombreArchivo[]);
+int pasarArchivoToArregloConFiltro(char nombreArchivo[], alumno A[], int dimension, char carrera[]);
+int pasarArregloToArchivo(char nombreArchivo[], alumno A[], int validos);
+void menu();
+
+int main()
+{
+    alumno listado[20];
+    //int validos=0;
+    char archivoAlumnos[]={"archivoAlumnos.bin"};
+
+    /*validos=cargarArregloAlumnos(listado,20);
+
+    system("pause");
+    system("cls");
+
+    mostrarArregloAlumnos(listado, validos);*/
+
+    cargarArchivoAlumnos(archivoAlumnos);
+
+    system("pause");
+    system("cls");
+
+    mostrarArchivoAlumnos(archivoAlumnos);
+
+    return 0;
+}
+
+int cargarArregloAlumnos(alumno A[],int dimension)
+{
+    int i=0;
+    char control='s';
+
+    while(i<dimension&&control=='s')
+    {
+        printf("Ingrese apellidos:\n");
+        fflush(stdin);
+        gets(&A[i].apellidos);
+        printf("Ingrese nombres:\n");
+        fflush(stdin);
+        gets(&A[i].nombres);
+        printf("Genero(m/f):\n");
+        fflush(stdin);
+        scanf("%c",&A[i].genero);
+        printf("Ingrese DNI:\n");
+        scanf("%d",&A[i].dni);
+        printf("Ingrese legajo:\n");
+        scanf("%d",&A[i].legajo);
+        printf("Ingrese carrera:\n");
+        fflush(stdin);
+        scanf("%s",&A[i].carrera);
+
+        printf("\n¿Desea agregar otro registro? s/n\n");
+        fflush(stdin);
+        scanf("%c",&control);
+
+        i++;
+    }
+    return i;
+}
+
+void mostrarUnAlumno(alumno aux)
+{
+    printf("Nombres: %s\nApellidos: %s\nGenero: %c\nDNI: %d\nLegajo: %d\nCarrera: %s\n",aux.nombres,aux.apellidos,aux.genero,aux.dni,aux.legajo,aux.carrera);
+    puts("");
+}
+
+void mostrarArregloAlumnos(alumno A[],int validos)
+{
+    int i=0;
+    for(i=0;i<validos;i++){
+    mostrarUnAlumno(A[i]);
+    }
+}
+
+void cargarArchivoAlumnos(char nombreArchivo[])
+{
+    int cantidad=0;
+    alumno aux[20];
+
+    FILE*archi=fopen(nombreArchivo,"ab");
+
+    if(archi!=NULL)
+    {
+        cantidad=cargarArregloAlumnos(aux,20);
+
+        fwrite(aux,sizeof(alumno),cantidad,archi);
+
+        fclose(archi);
+    }
+}
+
+void mostrarArchivoAlumnos(char nombreArchivo[])
+{
+    alumno aux;
+
+    FILE*archi=fopen(nombreArchivo,"rb");
+
+    if(archi!=NULL)
+    {
+        while(fread(&aux,sizeof(alumno),1,archi)>0){
+
+            mostrarUnAlumno(aux);
+        }
+    fclose(archi);
+
+    }
+}
+
